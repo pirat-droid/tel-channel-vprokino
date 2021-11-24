@@ -17,7 +17,6 @@ class Parsing:
         data = []
         for element in elements:
             if img:
-                # print(element)
                 data.append(element.img['data-original'])
             else:
                 data.append(element.get_text())
