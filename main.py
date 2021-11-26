@@ -1,6 +1,8 @@
 from create_db import CreateDB
 from network import Internet
 from parsing import Parsing
+from datetime import datetime
+from telegram import Telegram
 
 
 def create_message():
@@ -12,22 +14,26 @@ def create_message():
         exit()
 
     premieres_today = Parsing('https://www.kinoafisha.info/movies/')
-    title_t = premieres_today.get_data('span', 'movieItem_title')
-    subtitle_t = premieres_today.get_data('span', 'movieItem_subtitle')
-    genres_t = premieres_today.get_data('span', 'movieItem_genres')
-    country_t = premieres_today.get_data('span', 'movieItem_year')
+    title = premieres_today.get_data('span', 'movieItem_title')
+    subtitle = premieres_today.get_data('span', 'movieItem_subtitle')
+    genres = premieres_today.get_data('span', 'movieItem_genres')
+    country = premieres_today.get_data('span', 'movieItem_year')
 
     i = 0
-    move = []
-    while i < len(title_t):
-        dict = {'title': title_t[i], 'subtitle': subtitle_t[i], 'genres': genres_t[i], 'country': country_t[i]}
-        move.append(dict)
+    message = '\n\nСЕГОДНЯ В КИНО 🎥 \n\n'
+    while i < len(title):
+        message += f'🎞 {title[i]} - {subtitle[i]}'
+        message += '\n' + f'жанр: {genres[i]}.' + '\n' + f'Cтрана {country[i].replace(str(datetime.now().year) + ",", "")}' + '\n\n'
         i += 1
-    print(move)
+
+    print(message)
+    mes = Telegram('VPROkino', message)
+    mes.send_message()
+
 
 if __name__ == '__main__':
     create_message()
-# create message
+
 
 
 
