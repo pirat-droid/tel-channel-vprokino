@@ -19,10 +19,15 @@ class CreateDB:
     def __create_table(self):
         curr = self.conn.cursor()
         table = """ CREATE TABLE IF NOT EXISTS MESSAGE (
-                    id INTEGER PRIMARY KEY,
+                    id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                     text TEXT NOT NULL,
                     date_create datetime NOT NULL,
-                    published BOOLEAN DEFAULT TRUE);
+                    published BOOLEAN DEFAULT TRUE,
+                    image VARCHAR (100) NULL );
                 """
         curr.execute(table)
+        index = 'CREATE INDEX "message_id" ON "MESSAGE" ("id");'
+        curr.execute(index)
+        index = 'CREATE INDEX "message_date_create" ON "MESSAGE" ("date_create");'
+        curr.execute(index)
         self.conn.close()
