@@ -34,44 +34,6 @@ def create_message():
 if __name__ == '__main__':
     create_message()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# premieres_month = Parsing('https://www.kinoafisha.info/releases/2021/11/')
-# title_m = premieres_month.get_data('span', 'movieItem_title')
-# subtitle_m = premieres_month.get_data('span', 'movieItem_subtitle')
-# genres_m = premieres_month.get_data('span', 'movieItem_genres')
-# country_m = premieres_month.get_data('span', 'movieItem_year')
-#
-# print(title_m)
-# print(subtitle_m)
-# print(genres_m)
-# print(country_m)
 #
 # # убрать спец символы
 # news = Parsing('https://www.kinomania.ru/news')
