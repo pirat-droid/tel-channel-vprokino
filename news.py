@@ -3,6 +3,7 @@ from network import Internet
 from parsing import Parsing
 from datetime import datetime
 from telegram import Telegram
+import httplib2
 
 
 def create_message():
@@ -13,19 +14,20 @@ def create_message():
         print('Internet connect Lost!')
         exit()
 
-    # убрать спец символы
     news = Parsing('https://www.kinomania.ru/news')
-    message = news.get_data('div', 'news-pagelist-item-content')
+    message1 = news.get_data('div', 'pagelist-item-title')
+    message2 = news.get_find_next('div', 'pagelist-item-title', 'p')
     a = news.get_data('div', 'pagelist-item', True)
-    # print(a)
 
-    print(message[2])
-    # mes = Telegram('VPROkino', message)
-    # mes.send_message()
+    h = httplib2.Http('.cache')
+    response, content = h.request('http:' + a[0])
+    out = open(f'./image/{datetime.today().strftime("%Y-%m-%d-%H:%M:%S")}.jpg', 'wb')
+    out.write(content)
+    out.close()
+
+    mes = Telegram('VPROkino', message1[0] + '\n' + message2[0], f'./image/{datetime.today().strftime("%Y-%m-%d-%H:%M:%S")}.jpg')
+    mes.send_message()
 
 
 if __name__ == '__main__':
     create_message()
-
-#
-

@@ -21,3 +21,10 @@ class Parsing:
             else:
                 data.append(element.get_text())
         return data
+
+    def get_find_next(self, parent_tag, class_name, next_tag):
+        elements = self.soup.find_all(parent_tag, class_name)
+        data = []
+        for element in elements:
+            data.append(element.parent.findNext(next_tag).contents[0])
+        return data
